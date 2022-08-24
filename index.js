@@ -22,8 +22,9 @@ app.get('/', function(req, res, next){
 });
 
 app.get('/api', async function(req, res, next){
-    var fileId = '127zNmT3JXmgkoE0SgQ2RMsanQkCzRlzKqH9Aoa-qNG8',
-            accessToken = 'ya29.a0AVA9y1u1rHJBmrujtJRkagwjK9YI_pJKdYW6nuOjyOwqlz5A8YpJbzV2nnjYPWPtI-BT6_UjCccYhX9rtwr8m64a9ibWb1OuuvX-_U_SDMEBjglzN2vmtzXRs8HHsEbzzXXRjlU9ehMrtqc534oiL7hzCGgmygaCgYKATASATASFQE65dr8y3RWmGYyZHnu3w_CoKcgiw0165';
+    
+    var fileId = req.query.fileId,
+            accessToken = req.query.accessToken;
 
         // oauth setup
         var OAuth2 = google.auth.OAuth2,
@@ -51,7 +52,7 @@ app.get('/api', async function(req, res, next){
                 const contentType = image.contentType;
                 return image.read("base64").then(async function(imageBuffer) {
                     const imgext = contentType.replace("image/", "");
-                    var titletest = "this-is-a-test-title-4";
+                    var titletest = req.query.title;
                     const imagepath = 'public/'+titletest+'/'+i+'.'+imgext;
                     const { data, error } = await supabase.storage
                     .from('posts')
