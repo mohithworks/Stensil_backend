@@ -24,7 +24,8 @@ app.get('/', function(req, res, next){
 app.get('/api', async function(req, res, next){
     
     var fileId = req.query.fileId,
-            accessToken = req.query.accessToken;
+        accessToken = req.query.accessToken,
+        authId = reeq.body.authId;
 
         // oauth setup
         var OAuth2 = google.auth.OAuth2,
@@ -53,7 +54,7 @@ app.get('/api', async function(req, res, next){
                 return image.read("base64").then(async function(imageBuffer) {
                     const imgext = contentType.replace("image/", "");
                     var titletest = req.query.title;
-                    const imagepath = 'public/'+titletest+'/'+i+'.'+imgext;
+                    const imagepath = 'public/'+authId+'/'+titletest+'/'+i+'.'+imgext;
                     const { data, error } = await supabase.storage
                     .from('posts')
                     .upload(imagepath, decode(imageBuffer), {
