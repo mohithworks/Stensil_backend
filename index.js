@@ -25,7 +25,7 @@ app.get('/api', async function(req, res, next){
     
     var fileId = req.query.fileId,
         accessToken = req.query.accessToken,
-        authId = reeq.body.authId;
+        authId = req.body.authId;
 
         // oauth setup
         var OAuth2 = google.auth.OAuth2,
