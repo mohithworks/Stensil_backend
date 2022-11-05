@@ -46,7 +46,7 @@ app.get('/api', async function(req, res, next){
 
         var options = {
             styleMap: [
-                "p[style-name='Heading 1'] => h2:fresh",
+                "p[style-name='Heading 1'] => h3:fresh",
             ],
             convertImage: mammoth.images.imgElement(function(image) {
                 i++;
