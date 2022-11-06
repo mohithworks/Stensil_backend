@@ -71,11 +71,14 @@ app.get('/api', async function(req, res, next){
                         if(error) {
                             console.log(error);
                         }
-                        console.log(publicURL);
-                        return {
-                            src: publicURL.toString(),
-                            alt: 'Test',
-                        };
+                        if(publicURL) {
+                            console.log(publicURL);
+                            const mainurl = publicURL + '?' + new Date().getTime();
+                            return {
+                                src: mainurl.toString(),
+                                alt: 'Test',
+                            };
+                        }
                         // if(publicURL) { 
                         //     url = publicURL;
                         //     console.log(publicURL);
@@ -109,7 +112,7 @@ app.get('/api', async function(req, res, next){
                 html = result.value; // The generated HTMLx
                 var messages = result.messages; // Any messages, such as warnings during conversion
                 console.log(messages);
-                var editedHtml = html.replace(/<img /g, "<img style={{borderRadius: 20}} ");
+                var editedHtml = html.replace(/<img /g, "<img ");
                 if(editedHtml) {
                     res.send(editedHtml);
                 }
