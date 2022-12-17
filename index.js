@@ -114,6 +114,7 @@ app.get('/api', async function(req, res, next){
                 console.log(messages);
                 var editedHtml = html.replace(/<img /g, "<img ");
                 if(editedHtml) {
+                    res.setHeader('Access-Control-Allow-Origin', "*");
                     res.send(editedHtml);
                 }
                 // fs.writeFile('binary2.html', editedHtml, function(err){
