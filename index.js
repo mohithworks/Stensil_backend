@@ -15,7 +15,7 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors({ origin: 'https://29utfq-3000.preview.csb.app' }));
+app.use(cors());
 
 app.get('/', function(req, res, next){
     res.send("Started");
