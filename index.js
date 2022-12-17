@@ -15,7 +15,9 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({
+    origin: '*'
+}));
 
 app.get('/', function(req, res, next){
     res.send("Started");
@@ -114,7 +116,6 @@ app.get('/api', async function(req, res, next){
                 console.log(messages);
                 var editedHtml = html.replace(/<img /g, "<img ");
                 if(editedHtml) {
-                    res.setHeader('Access-Control-Allow-Origin', "*");
                     res.send(editedHtml);
                 }
                 // fs.writeFile('binary2.html', editedHtml, function(err){
