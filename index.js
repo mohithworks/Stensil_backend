@@ -7,7 +7,7 @@ var fs = require("fs");
 var mammoth = require("mammoth");
 var express = require("express");
 var cors = require("cors");
-var axios = require('axios');
+var axios = require("axios");
 require("dotenv").config();
 
 // Create a single supabase client for interacting with your database
@@ -144,60 +144,85 @@ app.get("/api/cus-domain", async function (req, res, next) {
     ssl = req.query.ssl;
 
   var data = JSON.stringify({
-    "redirect": false,
-    "incoming_address": incomingDomain,
-    "exact_match": false,
-    "target_address": targetDomain,
-    "target_ports": ssl
-  });
-  
-  var config = {
-    method: 'post',
-    url: 'https://cloud.approximated.app/api/vhosts',
-    headers: { 
-      'api-key': 'ca394897-f4c7-45c0-987f-73b8c69876e1-1670608243', 
-      'Content-Type': 'application/json'
-    },
-    data : data
-  };
-  
-  axios(config)
-  .then(function (response) {
-    console.log(JSON.stringify(response.data));
-    res.send(response.data);
-  })
-  .catch(function (error) {
-    console.log(error);
+    redirect: false,
+    incoming_address: incomingDomain,
+    exact_match: false,
+    target_address: targetDomain,
+    target_ports: ssl,
   });
 
+  var config = {
+    method: "post",
+    url: "https://cloud.approximated.app/api/vhosts",
+    headers: {
+      "api-key": "ca394897-f4c7-45c0-987f-73b8c69876e1-1670608243",
+      "Content-Type": "application/json",
+    },
+    data: data,
+  };
+
+  axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+      res.send(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 });
 
 app.get("/api/cus-domain/check", async function (req, res, next) {
   var incomingDomain = req.query.incomingDomain;
 
   var data = JSON.stringify({
-    "incoming_address": incomingDomain
-  });
-  
-  var config = {
-    method: 'post',
-    url: 'https://cloud.approximated.app/api/vhosts/by/incoming',
-    headers: { 
-      'api-key': 'ca394897-f4c7-45c0-987f-73b8c69876e1-1670608243', 
-      'Content-Type': 'application/json'
-    },
-    data : data
-  };
-  
-  axios(config)
-  .then(function (response) {
-    console.log(JSON.stringify(response.data));
-    res.send(response.data);
-  })
-  .catch(function (error) {
-    console.log(error);
+    incoming_address: incomingDomain,
   });
 
+  var config = {
+    method: "post",
+    url: "https://cloud.approximated.app/api/vhosts/by/incoming",
+    headers: {
+      "api-key": "ca394897-f4c7-45c0-987f-73b8c69876e1-1670608243",
+      "Content-Type": "application/json",
+    },
+    data: data,
+  };
+
+  axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+      res.send(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+});
+
+app.get("/api/cus-domain/delete", async function (req, res, next) {
+  var incomingDomain = req.query.incomingDomain;
+
+  var data = JSON.stringify({
+    incoming_address: incomingDomain,
+  });
+
+  var config = {
+    method: "delete",
+    url: "https://cloud.approximated.app/api/vhosts",
+    headers: {
+      "api-key": "ca394897-f4c7-45c0-987f-73b8c69876e1-1670608243",
+      "Content-Type": "application/json",
+    },
+    data: data,
+  };
+
+  axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+      res.send(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 });
 
 app.listen(port, () => console.log(`server started on port ${port}`));
