@@ -97,14 +97,30 @@ app.get("/api", async function (req, res, next) {
   var buffers = [];
   console.log("Started 2");
   try {
-    const result = await drive.files.export(
-      {
-        fileId: fileId,
-        mimeType:
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      },
-      { responseType: "arraybuffer" }
-    );
+    var result;
+    const file = await drive.files.get({
+      fileId: fileId,
+      fields: "mimeType",
+    });
+
+    if (file.data.mimeType.startsWith("application/vnd.google-apps.")) {
+      result = await drive.files.export(
+        {
+          fileId: fileId,
+          mimeType:
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        },
+        { responseType: "arraybuffer" }
+      );
+    } else {
+      result = await drive.files.get(
+        {
+          fileId: fileId,
+          alt: "media",
+        },
+        { responseType: "arraybuffer" }
+      );
+    }
     console.log(result.status);
     buffers.push(Buffer.from(result.data));
     console.log(buffers);
